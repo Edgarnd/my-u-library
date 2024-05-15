@@ -1,11 +1,15 @@
-import React from 'react';
-import IconButton from '@mui/material/IconButton';
-import propTypes from "prop-types"
+import React, { MouseEventHandler } from "react"
+import IconButton from "@mui/material/IconButton"
 
-const ButtonIcon = ({ icon, onClick }) => {
+type ButtonIconProps = {
+    icon: React.ReactNode,
+    onClick?: MouseEventHandler<HTMLButtonElement> | undefined
+}
+
+const ButtonIcon: React.FC<ButtonIconProps> = ({ icon, onClick }) => {
     return (
         <>
-            <IconButton variant="contained" style={{
+            <IconButton style={{
                 borderRadius: "10px",
             }}
                 onClick={onClick}
@@ -13,11 +17,6 @@ const ButtonIcon = ({ icon, onClick }) => {
             >{icon}</IconButton>
         </>
     )
-}
-
-ButtonIcon.propTypes = {
-    icon: propTypes.any,
-    onClick: propTypes.func
 }
 
 export default ButtonIcon

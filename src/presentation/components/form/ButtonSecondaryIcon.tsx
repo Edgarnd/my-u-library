@@ -1,9 +1,17 @@
-import React from "react"
-import Button from "@mui/material/Button"
+import React, { MouseEventHandler } from "react"
+import Button, { ButtonPropsSizeOverrides } from "@mui/material/Button"
 import Icon from "@mui/material/Icon"
-import propTypes from "prop-types"
+import { OverridableStringUnion } from '@mui/types';
 
-const ButtonSecondaryIcon = ({ text, onClick, type, icon, size }) => {
+type ButtonSecondaryIconProps = {
+    text: string,
+    onClick: MouseEventHandler<HTMLButtonElement>,
+    type?: "submit" | "reset" | "button" | undefined,
+    icon: string,
+    size?: OverridableStringUnion<'small' | 'medium' | 'large', ButtonPropsSizeOverrides>,
+}
+
+const ButtonSecondaryIcon: React.FC<ButtonSecondaryIconProps> = ({ text, onClick, type, icon, size }) => {
     return (
         <>
             <Button variant="outlined" style={{
@@ -24,12 +32,5 @@ const ButtonSecondaryIcon = ({ text, onClick, type, icon, size }) => {
     )
 }
 
-ButtonSecondaryIcon.propTypes = {
-    text: propTypes.string,
-    onClick: propTypes.func,
-    type: propTypes.string,
-    icon: propTypes.string,
-    size: propTypes.string,
-}
 
 export default ButtonSecondaryIcon

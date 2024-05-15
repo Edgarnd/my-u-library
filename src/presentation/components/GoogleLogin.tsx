@@ -5,7 +5,7 @@ import jwt_deocde from "jwt-decode";
 const GoogleLogin = ({ responseGoogle }) => {
     const googlebuttonref = useRef();
     //const [user, setuser] = useState(false);
-    const onGoogleSignIn = (user) => {
+    const onGoogleSignIn = (user: any) => {
         let userCred = user.credential;
         let payload = jwt_deocde(userCred);
         //setuser(payload);

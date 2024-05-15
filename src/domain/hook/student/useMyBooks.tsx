@@ -17,31 +17,31 @@ const useMyBooks = () => {
     const columns = [
         {
             name: "Book",
-            selector: row => row.photo,
+            selector: (row: any) => row.photo,
             sortable: true,
             width: "15%"
         },
         {
             name: "Name",
-            selector: row => row.title,
+            selector: (row: any) => row.title,
             sortable: true,
             width: "15%"
         },
         {
             name: "Description",
-            selector: row => row.description,
+            selector: (row: any) => row.description,
             sortable: true,
             width: "15%"
         },
         {
             name: "Date end",
-            selector: row => row.finish,
+            selector: (row: any) => row.finish,
             sortable: true,
             width: "25%"
         },
         {
             name: <div style={{ textAlign: "left", width: "40%" }}>Acciones</div>,
-            cell: (row) => <div>
+            cell: (row: any) => <div>
                 <ButtonIcon icon={
                     <Icon sx={{ display: "block" }}>
                         mail_lock

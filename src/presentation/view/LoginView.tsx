@@ -13,8 +13,8 @@ import { Session } from '../../data/model/Session.ts';
 type LoginProps = {
     username?: string,
     password?: string,
-    session: Session,
-    navigate: NavigateFunction
+    session?: Session,
+    navigate?: NavigateFunction
 };
 
 type LoginState = {
@@ -30,7 +30,7 @@ class LoginView extends React.Component<LoginProps, LoginState> {
             password: ""
         }
     }
-    async loginCredentials(e): Promise<void> {
+    async loginCredentials(e: any): Promise<void> {
         if (e !== undefined) {
             e.preventDefault();
         }
@@ -38,11 +38,11 @@ class LoginView extends React.Component<LoginProps, LoginState> {
         if (userCredential !== null && userCredential !== undefined) {
             if (userCredential.user !== null && userCredential !== undefined) {
                 if (!userCredential.user.isAnonymous) {
-                    this.props.session.id = userCredential.user.uid;
-                    this.props.session.email = userCredential.user.email ?? "";
-                    this.props.session.name = userCredential.user.displayName ?? userCredential.user.email?.split("@")[0] ?? "";
-                    this.props.session.logged = true;
-                    this.props.navigate("/my-home");
+                    this.props.session!.id = userCredential.user.uid;
+                    this.props.session!.email = userCredential.user.email ?? "";
+                    this.props.session!.name = userCredential.user.displayName ?? userCredential.user.email?.split("@")[0] ?? "";
+                    this.props.session!.logged = true;
+                    this.props.navigate!("/my-home");
                 }
             }
         }
@@ -69,7 +69,7 @@ class LoginView extends React.Component<LoginProps, LoginState> {
                                     placeholder="Email"
                                     required={true}
                                     value={this.state.username}
-                                    onChange={(target) => this.setState({ ...this.state, username: target.value })}
+                                    onChange={(e) => this.setState({ ...this.state, username: e.target.value })}
                                 />
                                 <div style={{ height: "20px" }}></div>
                                 <InputTextForm
@@ -77,7 +77,7 @@ class LoginView extends React.Component<LoginProps, LoginState> {
                                     placeholder="Password"
                                     required={true}
                                     value={this.state.password}
-                                    onChange={(target) => this.setState({ ...this.state, password: target.value })}
+                                    onChange={(e) => this.setState({ ...this.state, password: e.target.value })}
                                 />
                                 <div style={{ height: "40px" }}></div>
                                 <ButtonPrimary
@@ -104,7 +104,7 @@ const GoogleLoginButton = () => {
     const navigate = useNavigate();
     const session = useSession();
 
-    const responseGoogle = (response) => {
+    const responseGoogle = (response: any) => {
         // setPicture(response.picture);
         if (response.jti) {
             session.id = response.jti;

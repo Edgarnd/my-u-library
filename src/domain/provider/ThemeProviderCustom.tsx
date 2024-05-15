@@ -1,14 +1,13 @@
 import React from 'react';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
-import propTypes from "prop-types";
 import useThemeCustom from '../hook/useThemeCustom.tsx';
 
-ThemeProviderCustom.propTypes = {
-    children: propTypes.any
+type ThemeProviderCustomProps = {
+    children: React.ReactNode
 }
 
-export default function ThemeProviderCustom({ children }) {
+const ThemeProviderCustom: React.FC<ThemeProviderCustomProps> = ({ children }) => {
     const { currentTheme } = useThemeCustom();
     return (
         <ThemeProvider theme={currentTheme}>
@@ -17,3 +16,4 @@ export default function ThemeProviderCustom({ children }) {
         </ThemeProvider>
     )
 }
+export default ThemeProviderCustom

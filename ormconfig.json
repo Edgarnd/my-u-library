@@ -1,0 +1,20 @@
+{
+    "database": "localhost",
+    "synchronize": true,
+    "logging": true,
+    "ssl": {
+      "rejectUnauthorized": false
+    },
+    "entities": ["/**/*.entity.{js,ts}"],
+    "migrations": [
+      "dist/migration/**/*.js"
+    ],
+    "subscribers": [
+      "dist/subscriber/**/*.js"
+    ],
+    "cli": {
+      "entitiesDir": "./src/entity",
+      "migrationsDir": "./src/migration",
+      "subscribersDir": "./src/subscriber"
+    }
+  }

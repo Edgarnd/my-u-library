@@ -1,9 +1,18 @@
 import { TextField } from '@mui/material'
-import propTypes from 'prop-types';
 import React from 'react';
 import { useState } from 'react';
 
-function InputTextForm({
+type InputTextFormProps = {
+  placeholder?: string,
+  type?: string,
+  value?: any,
+  onChange?: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> | undefined,
+  mtLabel?: string,
+  hInput?: string,
+  required?: boolean
+}
+
+const InputTextForm: React.FC<InputTextFormProps> = ({
   placeholder,
   type,
   value,
@@ -11,7 +20,7 @@ function InputTextForm({
   mtLabel = "0px",
   hInput,
   required = false
-}) {
+}) => {
   const [val, setVal] = useState(value);
   return (
     <div style={{ height: hInput }}>
@@ -46,20 +55,11 @@ function InputTextForm({
         onChange={(e) => {
           setVal(e.target.value);
           if (onChange != null && onChange !== undefined) {
-            onChange(e.target);
+            onChange!(e);
           }
         }} />
     </div>
   );
-}
-
-InputTextForm.propTypes = {
-  placeholder: propTypes.string,
-  type: propTypes.string,
-  value: propTypes.string,
-  onChange: propTypes.func,
-  mtLabel: propTypes.string,
-  hInput: propTypes.string,
 }
 
 export default InputTextForm;

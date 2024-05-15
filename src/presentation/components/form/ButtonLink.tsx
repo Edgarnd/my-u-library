@@ -1,8 +1,16 @@
-import Button from "@mui/material/Button"
-import propTypes from "prop-types"
-import React from "react"
+import React, { MouseEventHandler } from "react"
+import Button, { ButtonPropsSizeOverrides } from "@mui/material/Button"
+import { OverridableStringUnion } from '@mui/types';
 
-const ButtonLink = ({ text, onClick, type, size }) => {
+type ButtonLinkProps = {
+    text: string,
+    onClick: MouseEventHandler<HTMLButtonElement>,
+    type?: "submit" | "reset" | "button" | undefined,
+    icon?: string,
+    size?: OverridableStringUnion<'small' | 'medium' | 'large', ButtonPropsSizeOverrides>,
+}
+
+const ButtonLink: React.FC<ButtonLinkProps> = ({ text, onClick, type, size }) => {
     return (
         <>
             <Button variant="text"
@@ -16,13 +24,6 @@ const ButtonLink = ({ text, onClick, type, size }) => {
             >{text}</Button>
         </>
     )
-}
-
-ButtonLink.propTypes = {
-    text: propTypes.string,
-    onClick: propTypes.func,
-    type: propTypes.string,
-    size: propTypes.string,
 }
 
 export default ButtonLink

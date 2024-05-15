@@ -1,6 +1,5 @@
 import React from "react";
 import { useEffect, useState } from "react";
-import propTypes from "prop-types";
 import DataTable, { createTheme } from "react-data-table-component";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
@@ -40,11 +39,19 @@ createTheme("darkMode", {
     },
 });
 
-const DataTableCustom = ({ columns, loading, data, label, onAdd }) => {
-    const { isDarkMode } = useThemeCustom();
-    const [dataFiltered, setDataFiltered] = useState([]);
+type DataTableCustomProps = {
+    columns: Array<any>,
+    loading: boolean,
+    data: Array<any>,
+    label: string,
+    onAdd?: Function,
+}
 
-    function searchValue(objeto, valorBuscado, resultados) {
+const DataTableCustom: React.FC<DataTableCustomProps> = ({ columns, loading, data, label, onAdd }) => {
+    const { isDarkMode } = useThemeCustom();
+    const [dataFiltered, setDataFiltered] = useState<Array<any>>([]);
+
+    function searchValue(objeto: any, valorBuscado: string, resultados: Array<any>) {
         for (let clave in objeto) {
             if (typeof objeto[clave] === 'object') {
                 searchValue(objeto[clave], valorBuscado, resultados);
@@ -57,8 +64,8 @@ const DataTableCustom = ({ columns, loading, data, label, onAdd }) => {
         }
     }
 
-    function search(array, valorBuscado) {
-        const resultados = [];
+    function search(array: Array<any>, valorBuscado: string): Array<any> {
+        const resultados: Array<any> = [];
         for (let objeto of array) {
             searchValue(objeto, valorBuscado.toLowerCase(), resultados);
         }
@@ -82,7 +89,11 @@ const DataTableCustom = ({ columns, loading, data, label, onAdd }) => {
                         <div style={{ height: "38px" }}>
                             {onAdd && <ButtonSecondaryIcon
                                 text="Add new"
-                                onClick={onAdd}
+                                onClick={() => {
+                                    if (onAdd !== null && onAdd !== undefined) {
+                                        onAdd();
+                                    }
+                                }}
                                 type="button"
                                 icon="add" />}
                         </div>
@@ -96,7 +107,7 @@ const DataTableCustom = ({ columns, loading, data, label, onAdd }) => {
                     <InputTextForm
                         placeholder="Search"
                         onChange={(e) => {
-                            let valSearch = e.value.toLowerCase();
+                            let valSearch = e.target.value.toLowerCase();
                             let resultSearch = search(data, valSearch);
                             // data.filter(r => r.nombre.toLowerCase().includes(valSearch));
                             setDataFiltered(resultSearch);
@@ -119,7 +130,7 @@ const DataTableCustom = ({ columns, loading, data, label, onAdd }) => {
                         <CircularProgress thickness={5.0} />
                         <Typography>Loading</Typography>
                     </Box> :
-                    <Typography>There is no information</Typography>}
+                        <Typography>There is no information</Typography>}
                 </div>
             }
             paginationComponentOptions={{
@@ -129,13 +140,6 @@ const DataTableCustom = ({ columns, loading, data, label, onAdd }) => {
                 selectAllRowsItemText: "All",
             }} />
     )
-}
-
-DataTableCustom.propTypes = {
-    columns: propTypes.array,
-    loading: propTypes.bool,
-    data: propTypes.array,
-    onAdd: propTypes.func,
 }
 
 export default DataTableCustom

@@ -2,7 +2,6 @@ import React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import { styled } from "@mui/material/styles";
-import propTypes from "prop-types"
 
 const CardContentNoBottomPadding = styled(CardContent)(`
   &:last-child {
@@ -10,7 +9,11 @@ const CardContentNoBottomPadding = styled(CardContent)(`
   }
 `);
 
-export default function CardCustom({ children }) {
+type CardCustomProps = {
+    children: React.ReactNode
+}
+
+const CardCustom: React.FC<CardCustomProps> = ({ children }) => {
     return (
         <>
             <Card>
@@ -22,6 +25,4 @@ export default function CardCustom({ children }) {
     )
 }
 
-CardCustom.propTypes = {
-    children: propTypes.any
-} 
+export default CardCustom;

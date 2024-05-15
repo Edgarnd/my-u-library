@@ -6,7 +6,6 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
-import propTypes from "prop-types";
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
@@ -17,12 +16,24 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
-export default function DialogCustom({isOpen, closeAction, title, actions, content}) {
+type DialogCustomProps = {
+  isOpen: boolean,
+  closeAction?: React.MouseEventHandler<HTMLButtonElement> | undefined,
+  title: string,
+  content: React.ReactNode,
+  actions: React.ReactNode
+}
+
+const DialogCustom: React.FC<DialogCustomProps> = ({ isOpen, closeAction, title, actions, content }) => {
 
   return (
     <React.Fragment>
       <BootstrapDialog
-        onClose={closeAction}
+        onClose={(e: any) => {
+          if (closeAction !== null && closeAction !== undefined) {
+            closeAction(e);
+          }
+        }}
         aria-labelledby="customized-dialog-title"
         open={isOpen}
       >
@@ -52,10 +63,4 @@ export default function DialogCustom({isOpen, closeAction, title, actions, conte
   );
 }
 
-DialogCustom.propTypes = {
-    isOpen: propTypes.bool,
-    closeAction: propTypes.func,
-    title: propTypes.string,
-    content: propTypes.any,
-    actions: propTypes.any
-}
+export default DialogCustom;
