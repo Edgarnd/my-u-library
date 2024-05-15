@@ -1,5 +1,5 @@
-import React, { useState, Component, useRef } from "react";
-import { useScript } from "../hook/useScript";
+import React, { useRef } from "react";
+import { useScript } from "../../domain/hook/useScript";
 import jwt_deocde from "jwt-decode";
 
 const GoogleLogin = ({ responseGoogle }) => {
@@ -13,20 +13,22 @@ const GoogleLogin = ({ responseGoogle }) => {
     };
     useScript("https://accounts.google.com/gsi/client", () => {
         window.google.accounts.id.initialize({
-            client_id: '27613329395-o92pu0fbrmc9hg27ak774m27k7nsha2q.apps.googleusercontent.com',
+            client_id: '662459598762-90bs39f7q54ai4v1flljeu3o9d1453pe.apps.googleusercontent.com',
             callback: onGoogleSignIn,
             auto_select: false,
         });
 
         window.google.accounts.id.renderButton(googlebuttonref.current, {
             size: "large",
-            type: "icon",
-            shape: "circle"
+            type: "standard",
+            theme: "outline",
+            locale: "en_US",
+            width: "280"
         });
     });
     return (
         <div>
-            <div ref={googlebuttonref} style={{ transform: 'scale(1.25, 1.25)', display: 'inline-block' }}></div>
+            <div ref={googlebuttonref} style={{ display: 'inline-block' }}></div>
         </div>
     );
 };
