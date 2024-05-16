@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import InputTextForm from '../components/form/InputTextForm.tsx';
 import ButtonPrimary from '../components/form/ButtonPrimary.tsx';
-import GoogleLogin from '../components/GoogleLogin.tsx';
+import GoogleLogin from '../components/GoogleLogin.jsx';
 import { Typography } from '@mui/material';
 import { auth } from '../../domain/util/firebase.ts';
 import { UserCredential, signInWithEmailAndPassword } from "firebase/auth";
@@ -30,7 +30,11 @@ const LoginView: React.FC = () => {
             session.id = userInfo.id.toString();
             session.role = userInfo.role;
             session.options = userInfo.options;
-            navigate!("/my-home");
+            if(session.role.toLowerCase() === "student"){
+                navigate!("/my-home");
+            } else {
+                navigate!("/home");
+            }
         } else {
             showSnackbar("An error ocurred, please report it with the administration")
         }
@@ -115,14 +119,22 @@ const GoogleLoginButton = ({ loadOptionsRole }: GoogleLoginButtonProps) => {
     const { showSnackbar } = useSnackbarContext();
     const navigate = useNavigate();
     const session = useSession();
+    const {
+        registerUser
+    } = useLogin();
 
-    const responseGoogle = (response: any) => {
+    const responseGoogle = async (response: any) => {
         // setPicture(response.picture);
         if (response.jti) {
             session.email = response.email;
             session.name = response.name;
             session.logged = true;
-            loadOptionsRole();
+            let userIsRegistered = await registerUser();
+            if (userIsRegistered) {
+                loadOptionsRole();
+            } else {
+                showSnackbar("You cant sign ing, please report it with the administration");
+            }
         } else {
             showSnackbar("You cant sign ing, please report it with the administration");
             setLogin(false);

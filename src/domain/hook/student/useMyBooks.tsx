@@ -59,6 +59,7 @@ const useMyBooks = () => {
                         visibility
                     </Icon>} onClick={() => {
                         setMyBookDetail(row);
+                        setIsOpen(true);
                     }} />
             </div>,
             ignoreRowClick: true,
@@ -101,15 +102,9 @@ const useMyBooks = () => {
         }
     }, [loadingData, fetchData, booksList])
 
-    const reloadTable = () => {
-        setLoadingData(true);
-        setBooksList(null);
-    }
-
     const closeModal = () => {
         setIsOpen(false);
-        setMyBookDetail(null);
-    }
+    };
 
     return {
         columns,

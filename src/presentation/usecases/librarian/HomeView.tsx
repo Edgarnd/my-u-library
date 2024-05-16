@@ -18,7 +18,13 @@ const HomeView = () => {
                                 <Box display="flex" flexDirection="column">
                                     <Typography variant="h6" fontWeight="bold">Welcome! {session?.name}</Typography>
                                     <div style={{ height: "10px" }}></div>
-                                    <Typography variant="body2">This is the library platform of the Stanford University here you can check the books you lent, you can review those ones and read a description and basic information about the book, also you can review the dates where you have to come back the books or request more time to have them.</Typography>
+                                    <Typography variant="body2">This is the library platform of the Stanford University here you can:</Typography>
+                                    <br />
+                                    <ul style={{ listStyleType: "circle" }}>
+                                        <Typography variant="body2">Manage the books</Typography>
+                                        <Typography variant="body2">Manage the stock</Typography>
+                                        <Typography variant="body2">Manage the users</Typography>
+                                    </ul>
                                 </Box>
                             </Grid>
                             <Grid item xs={5} md={2} alignSelf="flex-end" sx={{ display: { xs: "none", sm: "none", md: "block" } }}>

@@ -10,6 +10,9 @@ import HomeView from './presentation/usecases/librarian/HomeView.tsx';
 import ThemeProviderCustom from './domain/provider/ThemeProviderCustom.tsx';
 import SnackbarProvider from './domain/provider/SnackbarProvider.tsx';
 import { AppSnackbar } from './presentation/components/shared/AppSnackbar.tsx';
+import UserBooksView from './presentation/usecases/librarian/UsersBooksView.tsx';
+import BooksView from './presentation/usecases/librarian/BooksView.tsx';
+import UsersView from './presentation/usecases/librarian/UsersView.tsx';
 
 class App extends React.Component {
     render() {
@@ -37,6 +40,27 @@ class App extends React.Component {
                     element={
                         <PrivateRoute>
                             <HomeView />
+                        </PrivateRoute>
+                    }></Route>
+                <Route
+                    path="/books"
+                    element={
+                        <PrivateRoute>
+                            <BooksView />
+                        </PrivateRoute>
+                    }></Route>
+                <Route
+                    path="/stock"
+                    element={
+                        <PrivateRoute>
+                            <UserBooksView />
+                        </PrivateRoute>
+                    }></Route>
+                <Route
+                    path="/users"
+                    element={
+                        <PrivateRoute>
+                            <UsersView />
                         </PrivateRoute>
                     }></Route>
             </Routes>
