@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from "react";
 import useAPI from "../useAPI.ts";
-import { MyBook, fromJson as MyBookFromJson } from "../../../data/model/response/MyBook.ts";
+import { Book, fromJson as BookFromJson } from "../../../data/model/response/Book.ts";
 import useSession from "../useSession.tsx";
 import ButtonIcon from "../../../presentation/components/form/ButtonIcon.tsx";
 import Icon from "@mui/material/Icon";
 import { useSnackbarContext } from "../../../data/context/snackbarContext.ts";
 
 const useBooks = () => {
-    const [booksList, setBooksList] = useState<Array<MyBook> | null>(null);
+    const [booksList, setBooksList] = useState<Array<Book> | null>(null);
     const [loadingData, setLoadingData] = useState<boolean>(true);
     const [isAdding, setIsAdding] = useState<boolean>(false);
     const [isViewing, setIsViewing] = useState<boolean>(false);
-    const [bookDetail, setBookDetail] = useState<MyBook | null>(null);
+    const [bookDetail, setBookDetail] = useState<Book | null>(null);
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [title, setTitle] = useState<string>("");
     const { fetchData } = useAPI();
@@ -48,8 +48,8 @@ const useBooks = () => {
             width: "15%"
         },
         {
-            name: "Date end",
-            selector: (row: any) => row.finish,
+            name: "Lend",
+            selector: (row: any) => row.qtyLend,
             sortable: true,
             width: "15%"
         },
@@ -86,13 +86,13 @@ const useBooks = () => {
                     });
                     if (response !== null && response !== undefined) {
                         const jsonResponse = response.data;
-                        var myBooksArr: MyBook[] = [];
+                        var booksArr: Book[] = [];
                         for (let index = 0; index < jsonResponse.length; index++) {
                             const u = jsonResponse[index];
-                            const myBookInList = MyBookFromJson(u);
-                            myBooksArr.push(myBookInList);
+                            const bookInList = BookFromJson(u);
+                            booksArr.push(bookInList);
                         }
-                        setBooksList(myBooksArr);
+                        setBooksList(booksArr);
                         setLoadingData(false);
                     }
                 }

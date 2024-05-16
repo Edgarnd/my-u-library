@@ -1,6 +1,6 @@
 import React from "react";
-import { MyBook } from "../../data/model/response/MyBook"
 import { Box, Grid, Typography } from "@mui/material";
+import { MyBook } from "../../data/model/response/MyBook.ts";
 
 type BookDetailContentProps = {
     book: MyBook

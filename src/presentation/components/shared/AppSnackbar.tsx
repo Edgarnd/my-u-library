@@ -9,7 +9,7 @@ export const AppSnackbar: React.FC = () => {
     <Snackbar
       open={snackbarState.open}
       message={snackbarState.message}
-      autoHideDuration={6000}
+      autoHideDuration={4000}
       onClose={closeSnackbar}
       anchorOrigin={{vertical: "top", horizontal: "right"}}
     />

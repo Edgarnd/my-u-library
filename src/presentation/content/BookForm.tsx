@@ -1,16 +1,16 @@
 import Grid from "@mui/material/Grid";
 import React from "react";
-import { MyBook } from "../../data/model/response/MyBook.ts";
 import InputTextForm from "../components/form/InputTextForm.tsx";
 import InputTextAreaForm from "../components/form/InputTextAreaForm.tsx";
 import InputFileForm from "../components/form/InputFileForm.tsx";
+import { Book } from "../../data/model/response/Book.ts";
 
 interface BookFormProps {
-    book?: MyBook;
+    book?: Book;
     photoNameFile?: string | undefined
 }
 
-export default function BookForm({ book = new MyBook(), photoNameFile = "Upload a photo" }: BookFormProps) {
+export default function BookForm({ book = new Book(), photoNameFile = "Upload a photo" }: BookFormProps) {
     return (
         <Grid container columns={12} spacing={5} rowSpacing={3}>
             <Grid item xs={12} md={6}>

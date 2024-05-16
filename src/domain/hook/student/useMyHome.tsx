@@ -87,8 +87,11 @@ const useMyHome = () => {
             ))
         });
         if (response !== null && response !== undefined) {
+            await getResultSearch();
+            setLoadRecentBooks(true);
+            setRecentList(null);
             closeModal();
-            showSnackbar(`Checkout successfully, review the section "My Books"`)
+            showSnackbar(`Checkout successfully, review the section "My Books"`);
         }
     };
 

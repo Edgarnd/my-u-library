@@ -29,25 +29,6 @@ const MyBooksView = () => {
                         data={booksList ?? []}
                         loading={loadingData}
                     />
-                    <DialogCustom
-                        title={`${title}`}
-                        isOpen={isOpen}
-                        closeAction={closeModal}
-                        content={
-                            <div></div>
-                        }
-                        actions={
-                            <>
-                                <div style={{
-                                    width: "300px",
-                                    display: "inline-flex"
-                                }}>
-                                    <ButtonLink
-                                        text="Cancel"
-                                        onClick={closeModal} />
-                                </div>
-                            </>
-                        } />
                 </CardCustom>
                 <DialogCustom
                     title="Book detail"

@@ -4,6 +4,8 @@ import { UserEntity } from '../models/entity/User.entity.ts';
 import { OptionsRoleEntity } from '../models/entity/OptionsRole.entity.ts';
 import { RolesEntity } from '../models/entity/Roles.entity.ts';
 import { UserInfoRes } from '../models/res/UserInfoRes.ts';
+import { UserListRes } from '../models/res/UserListRes.ts';
+import { auth, createUserWithEmailAndPassword } from '../../src/domain/util/firebase.ts';
 
 const app: Express = express();
 
@@ -48,8 +50,38 @@ app.post("/register", async (req: Request, res: Response) => {
         let userEntity = new UserEntity();
         userEntity.email = body.email;
         userEntity.idRole = body.role;
-        userEntity = await ApiDataSource.manager.save(userEntity);
-        return res.json(userEntity);
+        if (userEntity.email !== undefined && userEntity.email !== null) {
+            let userCredential = await createUserWithEmailAndPassword(auth, userEntity.email, body.password);
+            if (userCredential !== undefined && userCredential !== null) {
+                if (userCredential.user !== undefined && userCredential !== null) {
+                    userEntity = await ApiDataSource.manager.save(userEntity);
+                    return res.json(userEntity);
+                }
+            }
+        }
+        return res.status(400).json();
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({message: error});
+    }
+});
+
+app.get("/", async (req: Request, res: Response) => {
+    try {
+        const savedUsers = await ApiDataSource.manager.find(UserEntity);
+        const savedRoles = await ApiDataSource.manager.find(RolesEntity);
+        const listUsers: Array<UserListRes> = [];
+        for (let index = 0; index < savedUsers.length; index++) {
+            const elementUser = savedUsers[index];
+            const jsonUser = JSON.parse(JSON.stringify(elementUser));
+            const userListRes = new UserListRes();
+            userListRes.email = elementUser.email;
+            userListRes.idRole = elementUser.idRole;
+            userListRes.id = elementUser.id;
+            userListRes.role = savedRoles.find(r => r.id === elementUser.idRole)?.title;
+            listUsers.push(userListRes);
+        }
+        return res.json(listUsers);
     } catch (error) {
         return res.status(500).json();
     }

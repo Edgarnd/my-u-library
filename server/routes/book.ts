@@ -1,7 +1,7 @@
 import express, { Express, Request, Response } from 'express';
 import { ApiDataSource } from '../config/pgDb.ts';
 import { BookEntity } from '../models/entity/Book.entity.ts';
-import { In, Like } from 'typeorm';
+import { In } from 'typeorm';
 import { StockBookEntity } from '../models/entity/StockBook.entity.ts';
 
 const app: Express = express();
@@ -41,6 +41,7 @@ app.get("/", async (req: Request, res: Response) => {
             const jsonBook = JSON.parse(JSON.stringify(elementBook));
             jsonBook.photo = elementBook.photo?.toString("base64");
             jsonBook.quantity = elementStock.quantity;
+            jsonBook.qtyLend = elementStock.lend;
             listBooks.push(jsonBook);
         }
         return res.json(listBooks);
@@ -53,11 +54,9 @@ app.get("/query", async (req: Request, res: Response) => {
     try {
         let term = req.query.term?.toString().toLowerCase();
         const foundedBooks = await ApiDataSource.manager.getRepository(BookEntity)
-            .find({
-                where: {
-                    title: Like(`%${term}%`)
-                }
-            });
+            .createQueryBuilder("book")
+            .where("LOWER(book.title) LIKE :term", { term: `%${term?.toLowerCase()}%` })
+            .getMany();
         const foundedStocks = await ApiDataSource.manager.getRepository(StockBookEntity)
             .find({
                 where: {

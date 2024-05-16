@@ -9,7 +9,8 @@ type InputTextFormProps = {
   onChange?: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> | null,
   mtLabel?: string,
   hInput?: string,
-  required?: boolean
+  required?: boolean,
+  readOnly?: boolean
 }
 
 const InputTextForm: React.FC<InputTextFormProps> = ({
@@ -19,7 +20,8 @@ const InputTextForm: React.FC<InputTextFormProps> = ({
   onChange,
   mtLabel = "0px",
   hInput,
-  required = false
+  required = false,
+  readOnly = false
 }) => {
   const [val, setVal] = useState<string>(value ?? "");
   return (
@@ -45,6 +47,7 @@ const InputTextForm: React.FC<InputTextFormProps> = ({
           }
         }}
         InputProps={{
+          readOnly: readOnly,
           sx: { borderRadius: "8px" },
           style: {
             height: "100%",

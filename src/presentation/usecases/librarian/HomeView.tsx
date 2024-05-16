@@ -22,7 +22,7 @@ const HomeView = () => {
                                     <br />
                                     <ul style={{ listStyleType: "circle" }}>
                                         <Typography variant="body2">Manage the books</Typography>
-                                        <Typography variant="body2">Manage the stock</Typography>
+                                        <Typography variant="body2">See the stock</Typography>
                                         <Typography variant="body2">Manage the users</Typography>
                                     </ul>
                                 </Box>

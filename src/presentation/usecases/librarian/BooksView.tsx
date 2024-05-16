@@ -7,8 +7,8 @@ import DialogCustom from "../../components/dialog/DialogCustom.tsx";
 import useBooks from "../../../domain/hook/librarian/useBooks.tsx";
 import BookDetailContent from "../../content/BookDetailContent.tsx";
 import BookForm from "../../content/BookForm.tsx";
-import { MyBook } from "../../../data/model/response/MyBook.ts";
 import ButtonPrimary from "../../components/form/ButtonPrimary.tsx";
+import { Book } from "../../../data/model/response/Book.ts";
 
 const BooksView = () => {
     const {
@@ -37,10 +37,10 @@ const BooksView = () => {
                         columns={columns}
                         data={booksList ?? []}
                         loading={loadingData}
-                        onAdd={()=>{
+                        onAdd={() => {
                             setIsViewing(false);
                             setIsAdding(true);
-                            setBookDetail(new MyBook());
+                            setBookDetail(new Book());
                             setTitle("New Book");
                             setIsOpen(true);
                         }}
@@ -58,16 +58,18 @@ const BooksView = () => {
                         actions={
                             <>
                                 <div style={{
-                                    width: "300px",
+                                    width: isAdding ? "300px" : "100px",
                                     display: "inline-flex"
                                 }}>
                                     <ButtonLink
                                         text="Cancel"
                                         onClick={closeModal} />
-                                    <div style={{ width: "25px" }}></div>
-                                    <ButtonPrimary
-                                        text="Save book"
-                                        onClick={save} />
+                                    {isAdding && <>
+                                        <div style={{ width: "25px" }}></div>
+                                        <ButtonPrimary
+                                            text="Save book"
+                                            onClick={save} />
+                                    </>}
                                 </div>
                             </>
                         } />

@@ -19,10 +19,12 @@ function toJson(userInfoRes: UserInfoRes): string {
     return JSON.stringify(userInfoRes);
 }
 
-function fromJson(userInforesStr: string): UserInfoRes {
-    let optionRoleJson = JSON.parse(userInforesStr);
-    let optionRole = new UserInfoRes(optionRoleJson["title"], optionRoleJson["url"], optionRoleJson["muiIcon"]);
-    return optionRole;
+function fromJson(userInfoResStr: string): UserInfoRes {
+    let userInfoResJson = JSON.parse(userInfoResStr);
+    let userInfoRes = new UserInfoRes(userInfoResJson["id"], userInfoResJson["idRole"], userInfoResJson["email"],
+        userInfoResJson["role"], userInfoResJson["options"]
+    );
+    return userInfoRes;
 }
 
 export { UserInfoRes, toJson, fromJson }
