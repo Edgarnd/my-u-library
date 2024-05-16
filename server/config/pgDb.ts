@@ -11,7 +11,7 @@ export const ApiDataSource = new DataSource({
     username: connectionOptions.user ?? "",
     password: connectionOptions.password ?? "",
     database: connectionOptions.database ?? "",
-    schema: "dev",
+    schema: "public",
     entities: [__dirname + '/../**/*.entity.{js,ts}'],
     migrations: [`${__dirname}/**/migrations/*.{ts,js}`]
 })
