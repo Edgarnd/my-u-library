@@ -51,12 +51,17 @@ app.post("/register", async (req: Request, res: Response) => {
         userEntity.email = body.email;
         userEntity.idRole = body.role;
         if (userEntity.email !== undefined && userEntity.email !== null) {
-            let userCredential = await createUserWithEmailAndPassword(auth, userEntity.email, body.password);
-            if (userCredential !== undefined && userCredential !== null) {
-                if (userCredential.user !== undefined && userCredential !== null) {
-                    userEntity = await ApiDataSource.manager.save(userEntity);
-                    return res.json(userEntity);
+            if(body.password !== undefined && body.password !== null){
+                let userCredential = await createUserWithEmailAndPassword(auth, userEntity.email, body.password);
+                if (userCredential !== undefined && userCredential !== null) {
+                    if (userCredential.user !== undefined && userCredential !== null) {
+                        userEntity = await ApiDataSource.manager.save(userEntity);
+                        return res.json(userEntity);
+                    }
                 }
+            } else {
+                userEntity = await ApiDataSource.manager.save(userEntity);
+                return res.json(userEntity);
             }
         }
         return res.status(400).json();
