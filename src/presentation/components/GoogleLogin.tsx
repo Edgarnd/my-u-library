@@ -1,8 +1,10 @@
 import React, { useRef } from "react";
 import { useScript } from "../../domain/hook/useScript";
 import jwt_deocde from "jwt-decode";
+import useThemeCustom from "../../domain/hook/useThemeCustom.tsx";
 
 const GoogleLogin = ({ responseGoogle }) => {
+    const { isDarkMode } = useThemeCustom();
     const googlebuttonref = useRef();
     //const [user, setuser] = useState(false);
     const onGoogleSignIn = (user: any) => {
@@ -21,7 +23,7 @@ const GoogleLogin = ({ responseGoogle }) => {
         window.google.accounts.id.renderButton(googlebuttonref.current, {
             size: "large",
             type: "standard",
-            theme: "outline",
+            theme: isDarkMode ? "filled_blue" : "outline",
             locale: "en_US",
             width: "280"
         });

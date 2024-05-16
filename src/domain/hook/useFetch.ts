@@ -3,7 +3,7 @@ import axios from 'axios';
 import useSession from './useSession.tsx';
 
 function useFetch() {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string|null>(null);
   const session = useSession();
 
@@ -36,7 +36,7 @@ function useFetch() {
       setLoading(false);
       // return { statusCode, ...responseData };
       return response;
-    } catch (error) {
+    } catch (error: any) {
       setLoading(false);
       setError(error.message || 'An error ocurred');
       throw error;

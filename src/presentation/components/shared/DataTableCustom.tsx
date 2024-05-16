@@ -51,7 +51,7 @@ const DataTableCustom: React.FC<DataTableCustomProps> = ({ columns, loading, dat
     const { isDarkMode } = useThemeCustom();
     const [dataFiltered, setDataFiltered] = useState<Array<any>>([]);
 
-    function searchValue(objeto: any, valorBuscado: string, resultados: Array<any>) {
+    function searchValue(objeto: any, valorBuscado: string, resultados: any[]): void {
         for (let clave in objeto) {
             if (typeof objeto[clave] === 'object') {
                 searchValue(objeto[clave], valorBuscado, resultados);
@@ -63,14 +63,14 @@ const DataTableCustom: React.FC<DataTableCustomProps> = ({ columns, loading, dat
             }
         }
     }
-
-    function search(array: Array<any>, valorBuscado: string): Array<any> {
-        const resultados: Array<any> = [];
+    
+    function search(array: any[], valorBuscado: string): any[] {
+        const resultados: any[] = [];
         for (let objeto of array) {
             searchValue(objeto, valorBuscado.toLowerCase(), resultados);
         }
         return resultados;
-    }
+    }    
 
     useEffect(() => {
         setDataFiltered(data);
@@ -109,7 +109,6 @@ const DataTableCustom: React.FC<DataTableCustomProps> = ({ columns, loading, dat
                         onChange={(e) => {
                             let valSearch = e.target.value.toLowerCase();
                             let resultSearch = search(data, valSearch);
-                            // data.filter(r => r.nombre.toLowerCase().includes(valSearch));
                             setDataFiltered(resultSearch);
                         }} />
                 </div>

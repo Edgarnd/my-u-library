@@ -32,7 +32,7 @@ function useAPI() {
 
 
       return response;
-    } catch (error) {
+    } catch (error: any) {
       setError(error.message);
       setRequestInProgress(false);
     }

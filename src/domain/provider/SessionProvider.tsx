@@ -10,11 +10,6 @@ type SessionProviderProps = {
 const SessionProvider: React.FC<SessionProviderProps> = ({ children })  => {
     const [session, setSession] = useState<Session>(new Session());
 
-    const value = {
-        session,
-        setSession,
-    };
-
     return (
         <SessionContext.Provider value={session}>
             {children}

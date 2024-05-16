@@ -12,8 +12,11 @@ ApiDataSource.initialize().then(() => {
     app.use(express.static(path.join(__dirname, 'public')));
     app.get('/', (req, res) => {
         res.sendFile(path.join(__dirname + '/public/index.html'));
-    })
+    });
     app.use("/api", router);
+    app.use((req, res) => {
+        res.redirect('/');
+    });
     console.log('Server listening on port', process.env.PORT);
     console.log(`See this at http://localhost:${process.env.PORT}`);
     return app.listen(process.env.PORT);

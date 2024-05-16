@@ -8,6 +8,8 @@ import MyHomeView from './presentation/usecases/student/MyHomeView.tsx';
 import MyBooksView from './presentation/usecases/student/MyBooksView.tsx';
 import HomeView from './presentation/usecases/librarian/HomeView.tsx';
 import ThemeProviderCustom from './domain/provider/ThemeProviderCustom.tsx';
+import SnackbarProvider from './domain/provider/SnackbarProvider.tsx';
+import { AppSnackbar } from './presentation/components/shared/AppSnackbar.tsx';
 
 class App extends React.Component {
     render() {
@@ -47,7 +49,10 @@ root.render(
     <ThemeProviderCustom>
         <BrowserRouter>
             <SessionProvider>
-                <App />
+                <SnackbarProvider>
+                    <AppSnackbar />
+                    <App />
+                </SnackbarProvider>
             </SessionProvider>
         </BrowserRouter>
     </ThemeProviderCustom>

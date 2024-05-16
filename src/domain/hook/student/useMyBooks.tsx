@@ -1,35 +1,46 @@
-import { Icon } from "@mui/material";
 import React, { useState, useEffect } from "react";
 import useAPI from "../useAPI.ts";
-import ButtonIcon from "../../../presentation/components/form/ButtonIcon.tsx";
 import { MyBook, fromJson as MyBookFromJson } from "../../../data/model/response/MyBook.ts";
-import { MyBookDetailRes } from "../../../data/model/response/MyBookDetailResponse.ts";
-
+import { GetMyBookReq, toJson as GetMyBookToJson } from "../../../data/model/request/GetMyBookReq.ts";
+import useSession from "../useSession.tsx";
+import ButtonIcon from "../../../presentation/components/form/ButtonIcon.tsx";
+import Icon from "@mui/material/Icon";
 
 const useMyBooks = () => {
     const [booksList, setBooksList] = useState<Array<MyBook>|null>(null);
     const [loadingData, setLoadingData] = useState<boolean>(true);
-    const [myBookDetail, setMyBookDetail] = useState<MyBookDetailRes|null>(null);
-    const [myBookId, setMyBookId] = useState<string|null>(null);
+    const [myBookDetail, setMyBookDetail] = useState<MyBook|null>(null);
     const [isOpen, setIsOpen] = useState<boolean>(false);
     const [title, setTitle] = useState<string>("");
     const { fetchData } = useAPI();
+    const session = useSession();
     const columns = [
         {
-            name: "Book",
-            selector: (row: any) => row.photo,
-            sortable: true,
+            name: "Portrait",
+            cell: (row: any) => <div>
+                <img src={`data:${row.photoType};base64,${row.photo}`} style={{
+                    width: "100%"
+                }} />
+            </div>,
+            ignoreRowClick: true,
+            button: false,
             width: "15%"
         },
         {
             name: "Name",
             selector: (row: any) => row.title,
             sortable: true,
+            width: "20%"
+        },
+        {
+            name: "Genre",
+            selector: (row: any) => row.genre,
+            sortable: true,
             width: "15%"
         },
         {
-            name: "Description",
-            selector: (row: any) => row.description,
+            name: "Quantity",
+            selector: (row: any) => row.quantity,
             sortable: true,
             width: "15%"
         },
@@ -37,20 +48,22 @@ const useMyBooks = () => {
             name: "Date end",
             selector: (row: any) => row.finish,
             sortable: true,
-            width: "25%"
+            width: "15%"
         },
+
         {
-            name: <div style={{ textAlign: "left", width: "40%" }}>Acciones</div>,
+            name: "Details",
             cell: (row: any) => <div>
                 <ButtonIcon icon={
                     <Icon sx={{ display: "block" }}>
-                        mail_lock
+                        visibility
                     </Icon>} onClick={() => {
+                        setMyBookDetail(row);
                     }} />
             </div>,
             ignoreRowClick: true,
             button: true,
-            width: "20%"
+            width: "10%"
         },
     ];
     useEffect(() => {
@@ -58,11 +71,14 @@ const useMyBooks = () => {
             try {
                 if (loadingData && booksList === null) {
                     setBooksList([]);
-                    const response = await fetchData("/api/my-book/list", {
-                        method: 'GET',
+                    const response = await fetchData("/api/my-book", {
+                        method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
                         },
+                        data: GetMyBookToJson(new GetMyBookReq(
+                            `${session.id}:${session.email}`
+                        ))
                     });
                     if (response !== null && response !== undefined) {
                         const jsonResponse = response.data;
@@ -84,26 +100,6 @@ const useMyBooks = () => {
             getAll();
         }
     }, [loadingData, fetchData, booksList])
-
-    useEffect(() => {
-        if (myBookDetail === null && myBookId !== null) {
-            const getUsuario = async () => {
-                const response = await fetchData(`/api/my-book/detail/${myBookId}`, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                });
-                if (response !== null && response !== undefined) {
-                    const jsonResponse = response.data;
-                    setMyBookDetail(new MyBookDetailRes(jsonResponse));
-                    setMyBookId(null);
-                    setIsOpen(true);
-                }
-            };
-            getUsuario();
-        }
-    }, [fetchData, myBookDetail, myBookId]);
 
     const reloadTable = () => {
         setLoadingData(true);

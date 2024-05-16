@@ -5,8 +5,8 @@ import { useState } from 'react';
 type InputTextFormProps = {
   placeholder?: string,
   type?: string,
-  value?: any,
-  onChange?: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> | undefined,
+  value?: string | null,
+  onChange?: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement> | null,
   mtLabel?: string,
   hInput?: string,
   required?: boolean
@@ -21,7 +21,7 @@ const InputTextForm: React.FC<InputTextFormProps> = ({
   hInput,
   required = false
 }) => {
-  const [val, setVal] = useState(value);
+  const [val, setVal] = useState<string>(value ?? "");
   return (
     <div style={{ height: hInput }}>
       <TextField
