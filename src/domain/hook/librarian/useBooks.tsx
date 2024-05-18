@@ -5,6 +5,7 @@ import useSession from "../useSession.tsx";
 import ButtonIcon from "../../../presentation/components/form/ButtonIcon.tsx";
 import Icon from "@mui/material/Icon";
 import { useSnackbarContext } from "../../../data/context/snackbarContext.ts";
+import { FormUtil } from "../../util/formUtil.ts";
 
 const useBooks = () => {
     const [booksList, setBooksList] = useState<Array<Book> | null>(null);
@@ -105,8 +106,19 @@ const useBooks = () => {
         }
     }, [loadingData, fetchData, booksList])
 
-    const save = async () => {
+    const save = async (e?: React.FormEvent<HTMLFormElement>) => {
         try {
+            if(e !== undefined && e != null){
+                e.preventDefault();
+            }
+            let jsonToValidate = JSON.parse(JSON.stringify(bookDetail));
+            delete jsonToValidate["id"];
+            delete jsonToValidate["finish"];
+            delete jsonToValidate["qtyLend"];
+            if(!FormUtil.validateNotEmpty(jsonToValidate)){
+                showSnackbar("Complete the form");
+                return;
+            }
             const response = await fetchData("/api/book", {
                 method: "POST",
                 headers: {

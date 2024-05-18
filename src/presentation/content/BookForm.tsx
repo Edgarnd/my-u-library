@@ -16,47 +16,55 @@ export default function BookForm({ book = new Book(), photoNameFile = "Upload a 
             <Grid item xs={12} md={6}>
                 <InputTextForm
                     placeholder="Title"
+                    required={true}
                     value={book.title}
                     onChange={(e) => book.title = e.target.value} />
             </Grid>
             <Grid item xs={12} md={6}>
                 <InputTextForm
                     placeholder="Author"
+                    required={true}
                     value={book.author}
                     onChange={(e) => book.author = e.target.value} />
             </Grid>
             <Grid item xs={12} md={6}>
                 <InputTextForm
                     placeholder="Genre"
+                    required={true}
                     value={book.genre}
                     onChange={(e) => book.genre = e.target.value} />
             </Grid>
             <Grid item xs={12} md={6}>
                 <InputTextForm
                     placeholder="Revision"
+                    required={true}
                     value={book.revision}
                     onChange={(e) => book.revision = e.target.value} />
             </Grid>
             <Grid item xs={12} md={6}>
                 <InputTextForm
                     placeholder="Year Published"
+                    required={true}
                     value={book.yearPub.toString()}
                     onChange={(e) => book.yearPub = Number(e.target.value)} />
             </Grid>
             <Grid item xs={12} md={6}>
                 <InputTextForm
                     placeholder="Quantity in stock"
+                    required={true}
                     value={book.quantity.toString()}
                     onChange={(e) => book.quantity = Number(e.target.value)} />
             </Grid>
             <Grid item xs={12}>
                 <InputTextAreaForm
                     placeholder="Description"
+                    required={true}
                     value={book.description}
                     onChange={(e) => book.description = e.target.value} />
             </Grid>
             <Grid item xs={12}>
                 <InputFileForm
+                    required={true}
                     value={photoNameFile}
                     onChange={(e) => {
                         if (e.target.files !== null && e.target.files !== undefined) {

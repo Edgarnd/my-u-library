@@ -4,10 +4,11 @@ import React, { ChangeEventHandler } from "react";
 
 type InputFileFormProps = {
     onChange?: ChangeEventHandler<any> | undefined;
-    value?: string | undefined
+    value?: string | undefined,
+    required?: boolean | undefined
 }
 
-const InputFileForm: React.FC<InputFileFormProps> = ({ onChange, value }) => {
+const InputFileForm: React.FC<InputFileFormProps> = ({ onChange, value, required }) => {
     const [val, setVal] = React.useState<string>(value ?? "");
     return (
         <TextField
@@ -23,6 +24,7 @@ const InputFileForm: React.FC<InputFileFormProps> = ({ onChange, value }) => {
                             style={{ display: "none" }}
                             accept="image/*"
                             type="file"
+                            required={required}
                             hidden
                             onChange={(e) => {
                                 if (e.target.files !== null && e.target.files !== undefined) {

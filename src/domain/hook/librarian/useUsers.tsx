@@ -5,6 +5,7 @@ import Icon from "@mui/material/Icon";
 import { useSnackbarContext } from "../../../data/context/snackbarContext.ts";
 import { UserInfoRes, fromJson as UserFromJson } from "../../../data/model/response/UserInfoRes.ts";
 import { UserRegisterReq } from "../../../data/model/request/UserRegisterReq.ts";
+import { FormUtil } from "../../util/formUtil.ts";
 
 const useUsers = () => {
     const [usersList, setUserList] = useState<Array<UserInfoRes> | null>(null);
@@ -81,8 +82,15 @@ const useUsers = () => {
         }
     }, [loadingData, fetchData, usersList])
 
-    const save = async () => {
+    const save = async (e?: React.FormEvent<HTMLFormElement>) => {
         try {
+            if(e !== undefined && e !== null){
+                e.preventDefault();
+            }
+            if(!FormUtil.validateNotEmpty(JSON.parse(JSON.stringify(userDetail)))){
+                showSnackbar("Complete the form");
+                return;
+            }
             const response = await fetchData("/api/user/register", {
                 method: "POST",
                 headers: {

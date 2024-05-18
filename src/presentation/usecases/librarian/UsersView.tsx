@@ -48,6 +48,7 @@ const UsersView = () => {
                         title={`${title}`}
                         isOpen={isOpen}
                         closeAction={closeModal}
+                        formAction={(e) => {save(e);}}
                         content={
                             <div>
                                 {isAdding && <UserForm userRegister={userDetail!} />}
@@ -67,7 +68,8 @@ const UsersView = () => {
                                         <div style={{ width: "25px" }}></div>
                                         <ButtonPrimary
                                             text="Save user"
-                                            onClick={save} />
+                                            type="submit"
+                                            onClick={() => {}} />
                                     </>}
                                 </div>
                             </>

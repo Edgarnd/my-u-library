@@ -49,6 +49,7 @@ const BooksView = () => {
                         title={`${title}`}
                         isOpen={isOpen}
                         closeAction={closeModal}
+                        formAction={(e) => {save(e);}}
                         content={
                             <div>
                                 {isAdding && <BookForm book={bookDetail!} />}
@@ -68,7 +69,8 @@ const BooksView = () => {
                                         <div style={{ width: "25px" }}></div>
                                         <ButtonPrimary
                                             text="Save book"
-                                            onClick={save} />
+                                            type="submit"
+                                            onClick={() => {}} />
                                     </>}
                                 </div>
                             </>

@@ -21,10 +21,11 @@ type DialogCustomProps = {
   closeAction?: React.MouseEventHandler<HTMLButtonElement> | undefined,
   title: string,
   content: React.ReactNode,
-  actions: React.ReactNode
+  actions: React.ReactNode,
+  formAction?: React.FormEventHandler<HTMLFormElement> | undefined
 }
 
-const DialogCustom: React.FC<DialogCustomProps> = ({ isOpen, closeAction, title, actions, content }) => {
+const DialogCustom: React.FC<DialogCustomProps> = ({ isOpen, closeAction, title, actions, content, formAction }) => {
 
   return (
     <React.Fragment>
@@ -52,12 +53,14 @@ const DialogCustom: React.FC<DialogCustomProps> = ({ isOpen, closeAction, title,
         >
           <CloseIcon />
         </IconButton>
-        <DialogContent dividers>
-          {content}
-        </DialogContent>
-        <DialogActions>
-          {actions}
-        </DialogActions>
+        <form onSubmit={formAction}>
+          <DialogContent dividers>
+            {content}
+          </DialogContent>
+          <DialogActions>
+            {actions}
+          </DialogActions>
+        </form>
       </BootstrapDialog>
     </React.Fragment>
   );

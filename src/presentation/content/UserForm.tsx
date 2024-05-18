@@ -15,6 +15,7 @@ export default function UserForm({ userRegister = new UserRegisterReq(), readOnl
             <Grid item xs={12} md={6}>
                 <InputTextForm
                     placeholder="Email"
+                    required={true}
                     readOnly={readOnly}
                     value={userRegister.email}
                     onChange={(e) => userRegister.email = e.target.value} />
@@ -22,6 +23,7 @@ export default function UserForm({ userRegister = new UserRegisterReq(), readOnl
             <Grid item xs={12} md={6}>
                 <InputTextForm
                     placeholder="Password"
+                    required={true}
                     readOnly={readOnly}
                     value={userRegister.password}
                     onChange={(e) => userRegister.password = e.target.value} />
@@ -29,6 +31,7 @@ export default function UserForm({ userRegister = new UserRegisterReq(), readOnl
             <Grid item xs={12} md={6}>
                 <SelectForm
                     placeholder="Role"
+                    required={true}
                     value={userRegister.role}
                     onChange={(e) => userRegister.role = e.target.value} 
                     readOnly={readOnly} />
